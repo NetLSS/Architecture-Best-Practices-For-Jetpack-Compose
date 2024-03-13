@@ -21,20 +21,23 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun HomeScreen( modifier:Modifier = Modifier){
+fun HomeScreen(
+    onNavigateToSecondScreen: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     var text by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(60.dp)
-        ,
+            .padding(60.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
 
-    ){
+        ) {
 
         OutlinedTextField(
             value = text,
@@ -50,7 +53,9 @@ fun HomeScreen( modifier:Modifier = Modifier){
 
         Button(
             onClick = {
-
+                if (text.isNotEmpty()) {
+                    onNavigateToSecondScreen(text)
+                }
             },
             modifier = modifier.fillMaxWidth()
         ) {
