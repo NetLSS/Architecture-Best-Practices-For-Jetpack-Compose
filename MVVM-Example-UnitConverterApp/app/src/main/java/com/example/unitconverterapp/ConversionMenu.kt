@@ -27,7 +27,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 
 @Composable
-fun ConversionMenu(list: List<Conversion>, modifier: Modifier = Modifier) {
+fun ConversionMenu(
+    list: List<Conversion>,
+    modifier: Modifier = Modifier,
+    convert: (Conversion) -> Unit
+) {
 
     // 필요 상태 정의
     var displayingText by remember {
@@ -79,6 +83,7 @@ fun ConversionMenu(list: List<Conversion>, modifier: Modifier = Modifier) {
                 DropdownMenuItem(onClick = {
                     displayingText = conversion.description
                     expanded = false
+                    convert.invoke(conversion)
                 }) {
                     Text(
                         text = conversion.description,
