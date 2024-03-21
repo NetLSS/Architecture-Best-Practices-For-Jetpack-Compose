@@ -42,10 +42,13 @@ fun MainScreen(
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current
 ) {
-
+    var round by remember { mutableStateOf(1) }
     var total by remember { mutableStateOf(0.0) }
     var input by remember { mutableStateOf("") }
 
+    LaunchedEffect(key1 = round) {
+        Toast.makeText(context, "please, start counting round $round", Toast.LENGTH_SHORT).show()
+    }
 
     Column(
         modifier = Modifier
@@ -80,6 +83,11 @@ fun MainScreen(
             modifier = modifier.fillMaxWidth(),
             onClick = {
                 total += input.toDouble()
+                if (total > 300) {
+                    total = 0.0
+                    input = ""
+                    round++
+                }
             }
         ) {
             Text(
