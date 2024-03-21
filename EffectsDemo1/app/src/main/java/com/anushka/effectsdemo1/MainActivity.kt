@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.anushka.effectsdemo1.ui.theme.EffectsDemo1Theme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,13 +47,14 @@ fun MainScreen(
     var total by remember { mutableStateOf(0.0) }
     var input by remember { mutableStateOf("") }
     val scaffoldState = rememberScaffoldState()
+    val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(key1 = round) {
-        scaffoldState.snackbarHostState.showSnackbar(
-            "please, start counting round $round",
-            duration = SnackbarDuration.Short
-        )
-    }
+//    LaunchedEffect(key1 = round) {
+//        scaffoldState.snackbarHostState.showSnackbar(
+//            "please, start counting round $round",
+//            duration = SnackbarDuration.Short
+//        )
+//    }
     Scaffold(
         scaffoldState = scaffoldState
     ) {
@@ -89,6 +91,14 @@ fun MainScreen(
                 modifier = modifier.fillMaxWidth(),
                 onClick = {
                     total += input.toDouble()
+
+                    coroutineScope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            "Count updated",
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+
                     if (total > 300) {
                         total = 0.0
                         input = ""
