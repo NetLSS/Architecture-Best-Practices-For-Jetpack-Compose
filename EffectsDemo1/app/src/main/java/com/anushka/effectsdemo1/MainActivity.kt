@@ -45,57 +45,65 @@ fun MainScreen(
     var round by remember { mutableStateOf(1) }
     var total by remember { mutableStateOf(0.0) }
     var input by remember { mutableStateOf("") }
+    val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = round) {
-        Toast.makeText(context, "please, start counting round $round", Toast.LENGTH_SHORT).show()
+        scaffoldState.snackbarHostState.showSnackbar(
+            "please, start counting round $round",
+            duration = SnackbarDuration.Short
+        )
     }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(50.dp),
-        verticalArrangement = Arrangement.SpaceEvenly
+    Scaffold(
+        scaffoldState = scaffoldState
     ) {
-        Text(
-            modifier = modifier.fillMaxWidth(),
-            text = "Total is ${total.toString()}",
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
-            color = Color.DarkGray
-        )
-        OutlinedTextField(
-            modifier = modifier.fillMaxWidth(),
-            placeholder = { Text("Enter value here") },
-            value = input,
-            onValueChange = {
-                input = it
-            },
-            textStyle = TextStyle(
-                color = Color.LightGray,
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold
-            ),
-            label = { Text(text = "New count") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-        )
-
-        Button(
-            modifier = modifier.fillMaxWidth(),
-            onClick = {
-                total += input.toDouble()
-                if (total > 300) {
-                    total = 0.0
-                    input = ""
-                    round++
-                }
-            }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(50.dp),
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(
-                text = "Count",
+                modifier = modifier.fillMaxWidth(),
+                text = "Total is ${total.toString()}",
+                fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
-                fontWeight = FontWeight.Bold
+                color = Color.DarkGray
             )
+            OutlinedTextField(
+                modifier = modifier.fillMaxWidth(),
+                placeholder = { Text("Enter value here") },
+                value = input,
+                onValueChange = {
+                    input = it
+                },
+                textStyle = TextStyle(
+                    color = Color.LightGray,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                label = { Text(text = "New count") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+
+            Button(
+                modifier = modifier.fillMaxWidth(),
+                onClick = {
+                    total += input.toDouble()
+                    if (total > 300) {
+                        total = 0.0
+                        input = ""
+                        round++
+                    }
+                }
+            ) {
+                Text(
+                    text = "Count",
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
+
 }
 
