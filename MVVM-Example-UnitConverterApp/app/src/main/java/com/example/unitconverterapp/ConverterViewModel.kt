@@ -65,4 +65,16 @@ class ConverterViewModel(
         }
     }
 
+    fun removeResult(item: ConversionResult) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteResult(item)
+        }
+    }
+
+    fun clearAll() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllResults()
+        }
+    }
+
 }

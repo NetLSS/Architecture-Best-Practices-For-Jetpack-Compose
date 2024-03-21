@@ -22,13 +22,17 @@ fun BaseScreen(
 ) {
     // 변하지 않으므로 State 로 둘 필요가 없다.
     val list = converterViewModel.getConversions()
-    val historyList = converterViewModel.resultList.collectAsState(initial =  emptyList())
+    val historyList = converterViewModel.resultList.collectAsState(initial = emptyList())
 
     Column(modifier = modifier.padding(30.dp)) {
         TopScreen(list) { message1, message2 ->
             converterViewModel.addResult(message1, message2)
         }
         Spacer(modifier = modifier.height(20.dp))
-        HistoryScreen(historyList)
+        HistoryScreen(historyList, { item ->
+            converterViewModel.removeResult(item)
+        }, {
+            converterViewModel.clearAll()
+        })
     }
 }
