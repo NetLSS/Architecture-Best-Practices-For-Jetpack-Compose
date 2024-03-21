@@ -57,6 +57,8 @@ class ConverterViewModel(
         ),
     )
 
+    val resultList = repository.getSavedResult()
+
     fun addResult(message1: String, message2: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertResult(ConversionResult(0, message1, message2))

@@ -1,4 +1,4 @@
-package com.example.unitconverterapp.compose
+package com.example.unitconverterapp.compose.converter
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
